@@ -4,6 +4,7 @@
  */
 
 import * as THREE from "three"
+import gsap from "gsap"
 import Experience from "../Experience"
 
 let material = null
@@ -47,5 +48,38 @@ export default class LiftingDevice {
                 break
             }
         }
+    }
+
+    cmd(liu, action){
+        var obj
+        if(liu == '1') obj = this.liftingDevice000
+        else obj = this.liftingDevice001
+        switch (action) {
+            case "上升":
+
+                gsap.timeline().to(obj.position, {
+                    y:obj.position.y + 0.8,
+                    duration: 5
+                })
+                //幀動畫
+                // obj.position.y += 0.1
+                // if(obj.position.y >= 6) return
+                // requestAnimationFrame(()=>{
+                //     this.cmd(modelName, action) 60
+                // })
+            break;
+            case "下降":
+                gsap.timeline().to(obj.position, {
+                    y:obj.position.y - 0.8,
+                    duration: 5
+                })
+                // obj.position.y -= 0.1
+                // if(obj.position.y <= 5.2) return
+                // requestAnimationFrame(()=>{
+                //     this.cmd(modelName, action) 200
+                // })
+            break;
+        }
+        
     }
 }

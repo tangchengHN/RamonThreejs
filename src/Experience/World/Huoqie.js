@@ -4,9 +4,11 @@
 
 import * as THREE from "three"
 import Experience from "../Experience"
+import gsap from "gsap"
 
 let material = null
-
+// var speed = 3.2 / 5;
+var speed = 20 / 60;
 export default class Huoqie {
     constructor() {
         this.bindExperience()
@@ -17,6 +19,7 @@ export default class Huoqie {
         this.models = {}
         this.setMaterial()
         this.loadModel(name)
+
 
     }
 
@@ -44,6 +47,17 @@ export default class Huoqie {
             case "Huoqie000": {
                 this.models["Huoqie000"] = this.resources.items.Huoqie000.scene.children[0]
                 this.scene.add(this.models["Huoqie000"])
+                
+                this.tl1 = gsap.timeline()
+                this.tl1.to(this.models["Huoqie000"].position, {
+                    x: this.models["Huoqie000"].position.x + speed * 9.5,
+                    onComplete: () => {
+                        this.tl1.reverse(0)
+                        this.experience.world.models["Billets"].cmd("1", "一切位置切割");
+                    },
+                    duration: 9.5
+                }).kill()
+
                 break;
             }
             // 第一流二切
@@ -67,4 +81,20 @@ export default class Huoqie {
         }
     }
 
+
+    cmd(liu, action) {
+        switch (action) {
+            case "一切位置切割":
+                var tl = (liu == "1" ? this.tl1 : this.tl1)
+                var obj = (liu == "1" ? this.models["Huoqie000"] : this.models["Huoqie010"])
+                tl.restart();
+                break;
+            case "二切位置切割":
+
+                break;
+            case "复位":
+                break;
+
+        }
+    }
 }

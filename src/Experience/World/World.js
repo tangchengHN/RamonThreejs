@@ -54,6 +54,7 @@ export default class World {
 		var billet1 = new Billets()
 
 		this.models["Billets"] = billet1
+
 		// this.models["Billets"].push(new)
 
 		// 添加坐标轴
@@ -84,16 +85,82 @@ export default class World {
 	 * 分别用来调整动画开关和辊道线框颜色
 	 */
 	setDebug() {
-		this.debug.debugObject["Animate"] = false
-		var controlFolder = this.debug.ui.addFolder("control")
-		controlFolder.add(this.debug.debugObject, "Animate")
+		// this.debug.debugObject["Animate"] = false
+		// var controlFolder = this.debug.ui.addFolder("control")
+		// controlFolder.add(this.debug.debugObject, "Animate")
 		
-		var materialFolder = this.debug.ui.addFolder("material")
-		this.debug.debugObject["edgeColor"] = "#FFFFFF"
-		materialFolder
-		.addColor(this.debug.debugObject, "edgeColor")
-		.onChange(() => {
-			this.models["GunDao"].changeEdgeColor(this.debug.debugObject["edgeColor"])
+		// var materialFolder = this.debug.ui.addFolder("material")
+		// this.debug.debugObject["edgeColor"] = "#FFFFFF"
+		// materialFolder
+		// .addColor(this.debug.debugObject, "edgeColor")
+		// .onChange(() => {
+		// 	this.models["GunDao"].changeEdgeColor(this.debug.debugObject["edgeColor"])
+		// })
+
+
+		// this.debug.debugObject["一流"] = "下降"
+		// this.debug.debugObject["二流"] = "上升"
+		// var controlFolder = this.debug.ui.addFolder("升降杆")
+
+		// controlFolder.add(this.debug.debugObject, "一流", ["上升", "下降"]).onChange((value)=>{
+		// 	console.log(value)
+		// 	this.models["LiftingDevice"].cmd("LiftingDevice000", value)
+		// })
+		// controlFolder.add(this.debug.debugObject, "二流", ["上升", "下降"]).onChange((value)=>{
+		// 	console.log(value)
+		// 	this.models["LiftingDevice"].cmd("LiftingDevice001", value)
+		// })
+
+		
+		var controlFolder = this.debug.ui.addFolder("一流")
+		this.debug.debugObject["升降杆"] = "下降"
+		controlFolder.add(this.debug.debugObject, "升降杆", ["上升", "下降"]).onChange((value)=>{
+			console.log(value)
+			this.models["LiftingDevice"].cmd("1", value)
+		})
+
+		this.debug.debugObject["钢坯控制"] = "复位"
+		controlFolder.add(this.debug.debugObject, "钢坯控制", ["移动", "暂停","复位"]).onChange((value)=>{
+			console.log(value)
+			this.models["Billets"].cmd("1", value)
+		})
+		
+		this.debug.debugObject["一切位置切割"] = false
+		controlFolder.add(this.debug.debugObject, "一切位置切割").onChange((value)=>{
+			console.log(value)
+			this.models["Huoqie"].cmd("1", value?"一切位置切割":"");
+			// this.models["Billets"].cmd("1", value?"一切位置切割":"");
+		})
+		this.debug.debugObject["二切位置切割"] = false
+		controlFolder.add(this.debug.debugObject, "二切位置切割").onChange((value)=>{
+			console.log(value)
+			this.models["Huoqie"].cmd("1", value);
+		})
+
+
+		
+		var controlFolder = this.debug.ui.addFolder("二流")
+		this.debug.debugObject["升降杆"] = "下降"
+		controlFolder.add(this.debug.debugObject, "升降杆", ["上升", "下降"]).onChange((value)=>{
+			console.log(value)
+			this.models["LiftingDevice"].cmd("2", value)
+		})
+
+		this.debug.debugObject["钢坯控制"] = "复位"
+		controlFolder.add(this.debug.debugObject, "钢坯控制", ["移动", "暂停","复位"]).onChange((value)=>{
+			console.log(value)
+			this.models["Billets"].cmd("2", value)
+		})
+		
+		this.debug.debugObject["一切位置切割"] = false
+		controlFolder.add(this.debug.debugObject, "一切位置切割").onChange((value)=>{
+			console.log(value)
+			this.models["Huoqie"].cmd("2", value);
+		})
+		this.debug.debugObject["二切位置切割"] = false
+		controlFolder.add(this.debug.debugObject, "二切位置切割").onChange((value)=>{
+			console.log(value)
+			this.models["Huoqie"].cmd("2", value);
 		})
 
 	}
